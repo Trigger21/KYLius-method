@@ -74,6 +74,7 @@ W_o = tf.get_variable("W_o", shape=[217,41],initializer=tf.contrib.layers.xavier
 b = tf.Variable(tf.random_normal([41]))
 logits = tf.matmul(L4, W_o) + b
 logits = tf.layers.batch_normalization(logits)
+softmax = tf.nn.softmax(logits, name="softmax")
 #logits shape=(?,41)
 
 # define cost/loss & optimizer
@@ -107,6 +108,6 @@ for epoch in range(training_epochs):
         x2=np.random.choice(testLabel.shape[0], 300, replace=False)
         print('TestAccuracy:', sess.run(accuracy, feed_dict={
                 X: testData[x2], Y: testLabel[x2].reshape(-1, 1), p_keep_conv: 1, p_keep_hidden: 1}))
-        save_path = saver.save(sess, '/home/paperspace/Downloads/optx/optx')
+        save_path = saver.save(sess, '/home/paperspace/Downloads/mfcc/opt')
 print('Finished!')
 
